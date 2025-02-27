@@ -21,3 +21,14 @@
 
     - role: upgrade
       tags: [upgrade, upgradable, never]
+
+    #
+    # Service roles
+    #
+    - role: nginx-proxy
+      tags: [nginx-proxy, upgradable]
+      when: nginx_proxy_managed | default(false)
+
+    - role: nginx-proxy-manager
+      tags: [nginx-proxy-manager, upgradable]
+      when: nginx_proxy_manager_managed | default(false)

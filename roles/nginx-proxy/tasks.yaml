@@ -1,0 +1,28 @@
+---
+- name: Compose
+  become: true
+  become_user: "{{ nginx_proxy_owner }}"
+  vars:
+    compose_dir: "{{ nginx_proxy_compose_dir | default('~/docker/nginx-proxy') }}"
+    service_state: "{{ nginx_proxy_enabled | ternary('present', 'absent') }}"
+  block:
+    - name: Create compose directory
+      ansible.builtin.file:
+        path: "{{ compose_dir }}"
+        state: directory
+        mode: '0700'
+
+    - name: Create compose.yaml
+      ansible.builtin.template:
+        src: compose.yaml.j2
+        dest: "{{ compose_dir }}/compose.yaml"
+        mode: '0600'
+
+    - name: Apply service state
+      community.docker.docker_compose_v2:
+        project_src: "{{ compose_dir }}"
+        state: "{{ service_state }}"
+
+- name: Mark done
+  ansible.builtin.set_fact:
+    _nginx_proxy_done: true

@@ -1,0 +1,18 @@
+---
+services:
+  nginx-proxy:
+    # https://hub.docker.com/r/jwilder/nginx-proxy/tags?name=alpine
+    image: jwilder/nginx-proxy:{{ nginx_proxy_version }}
+    container_name: "{{ nginx_proxy_service_name }}"
+    restart: unless-stopped
+    hostname: "{{ nginx_proxy_hostname }}"
+    networks:
+      - "{{ nginx_proxy_net }}"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - "{{ nginx_proxy_http_port }}:80"
+
+networks:
+  "{{ nginx_proxy_net }}":
+    name: "{{ nginx_proxy_net }}"

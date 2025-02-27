@@ -9,7 +9,7 @@
 ###
 ### Server connection configuration
 ###
-# Don't keep passwords in plain text, encrypt then. One option would be:
+# Don't keep passwords in plain text, encrypt them. One option would be:
 #   ansible-vault encrypt_string -J PASSWORD_PLACEHOLDER
 ansible_user: ansible-guy   # <- Not required for ssh-key-based connection
 ansible_password: changeme  # <- Not required for ssh-key-based connection
@@ -18,6 +18,42 @@ ansible_become_password: changeme
 # All before this ROLES_CONF_TS4LE64m91 marker stays
 # unchanged by build-sample-vars.sh script
 #################### {{ ROLES_CONF_TS4LE64m91 }} ####################
+
+###
+### NGINX-PROXY-MANAGER
+###
+# Versions:
+# * https://hub.docker.com/r/jc21/nginx-proxy-manager/tags
+# -----
+# # Optional path to extra configuration .env.j2 file
+# nginx_proxy_manager_extra_envfile: "{{ playbook_dir }}/resources/npm/extra.env.j2"
+nginx_proxy_manager_managed: false
+nginx_proxy_manager_enabled: false
+nginx_proxy_manager_version: latest
+nginx_proxy_manager_owner: "{{ ansible_user | default(ansible_user_id) }}"
+# nginx_proxy_manager_compose_dir: ~/docker/nginx-proxy-manager # <- Better leave automanaged, or uncomment and edit
+nginx_proxy_manager_conf_dir: ~/conf/nginx-proxy-manager
+nginx_proxy_manager_service_name: nginx-proxy-manager
+nginx_proxy_manager_hostname: "{{ nginx_proxy_manager_service_name }}"
+nginx_proxy_manager_vhost: "{{ nginx_proxy_manager_service_name }}.domain.local"
+nginx_proxy_manager_extra_envfile:
+
+###
+### NGINX-PROXY
+###
+# Versions:
+# * https://hub.docker.com/r/jwilder/nginx-proxy/tags?name=alpine
+# Exposes:
+# * nxinx_proxy_net - proxy network name
+# -----
+nginx_proxy_managed: false
+nginx_proxy_enabled: false
+nginx_proxy_version: alpine
+nginx_proxy_owner: "{{ ansible_user | default(ansible_user_id) }}"
+# nginx_proxy_compose_dir: ~/docker/nginx-proxy # <- Better leave automanaged, or uncomment and edit
+nginx_proxy_service_name: nginx-proxy
+nginx_proxy_hostname: "{{ nginx_proxy_service_name }}"
+nginx_proxy_http_port: 80
 
 ###
 ### CLI-DOWNLOADERS

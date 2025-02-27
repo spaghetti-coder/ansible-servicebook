@@ -1,0 +1,14 @@
+---
+# Versions:
+# * https://hub.docker.com/r/jwilder/nginx-proxy/tags?name=alpine
+# Exposes:
+# * nxinx_proxy_net - proxy network name
+# -----
+nginx_proxy_managed: false
+nginx_proxy_enabled: false
+nginx_proxy_version: alpine
+nginx_proxy_owner: "{{ ansible_user | default(ansible_user_id) }}"
+# nginx_proxy_compose_dir: ~/docker/nginx-proxy # <- Better leave automanaged, or uncomment and edit
+nginx_proxy_service_name: nginx-proxy
+nginx_proxy_hostname: "{{ nginx_proxy_service_name }}"
+nginx_proxy_http_port: 80

@@ -1,0 +1,57 @@
+---
+- name: Compose
+  become: true
+  become_user: "{{ nginx_proxy_manager_owner }}"
+  vars:
+    compose_dir: "{{ nginx_proxy_manager_compose_dir | default('~/docker/nginx-proxy-manager') }}"
+    extra_envfile: "{{ nginx_proxy_manager_extra_envfile }}"
+    conf_dir: "{{ nginx_proxy_manager_conf_dir }}"
+    service_state: "{{ nginx_proxy_manager_enabled | ternary('present', 'absent') }}"
+    owner_uid: "{{ getent_passwd[nginx_proxy_manager_owner].1 }}"
+    owner_gid: "{{ getent_passwd[nginx_proxy_manager_owner].2 }}"
+  block:
+    - name: Create compose directory
+      ansible.builtin.file:
+        path: "{{ compose_dir }}"
+        state: directory
+        mode: '0700'
+
+    - name: Create main.env
+      ansible.builtin.template:
+        src: main.env.j2
+        dest: "{{ compose_dir }}/main.env"
+        mode: '0600'
+
+    - name: Remove extra.env
+      ansible.builtin.file:
+        path: "{{ compose_dir }}/extra.env"
+        state: absent
+      when: not extra_envfile
+
+    - name: Create extra.env
+      ansible.builtin.template:
+        src: "{{ extra_envfile }}"
+        dest: "{{ compose_dir }}/extra.env"
+        mode: '0600'
+      when: extra_envfile
+
+    - name: Create config directory
+      ansible.builtin.file:
+        path: "{{ conf_dir }}"
+        state: directory
+        mode: '0700'
+
+    - name: Create compose.yaml
+      ansible.builtin.template:
+        src: compose.yaml.j2
+        dest: "{{ compose_dir }}/compose.yaml"
+        mode: '0600'
+
+    - name: Apply service state
+      community.docker.docker_compose_v2:
+        project_src: "{{ compose_dir }}"
+        state: "{{ service_state }}"
+
+- name: Mark done
+  ansible.builtin.set_fact:
+    _nginx_proxy_manager_done: true
