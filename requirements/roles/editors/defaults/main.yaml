@@ -1,0 +1,7 @@
+---
+# Installs: nano, neovim, vim
+# -----
+# editors_exclude:   # <- Won't install list
+#   - vim
+editors_managed: false
+editors_exclude: []

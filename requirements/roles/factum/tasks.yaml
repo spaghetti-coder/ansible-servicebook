@@ -1,0 +1,23 @@
+---
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/getent_module.html
+# https://stackoverflow.com/questions/60414055/how-can-i-find-the-user-id-using-ansible-and-use-that-in-a-jinja2-template
+- name: Load users database
+  ansible.builtin.getent:
+    database: passwd
+
+- name: Set OS family
+  ansible.builtin.set_fact:
+    factum_os_family: "{{ ansible_os_family | lower }}"
+
+- name: Detect OS like
+  ansible.builtin.include_tasks:
+    file: os-like.yaml
+
+- name: Detect Ubuntu codename
+  ansible.builtin.include_tasks:
+    file: ubuntu-codename.yaml
+  when: factum_os_like in ['ubuntu']
+
+- name: Mark done
+  ansible.builtin.set_fact:
+    _factum_done: true

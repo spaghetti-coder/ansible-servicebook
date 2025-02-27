@@ -1,0 +1,7 @@
+---
+factum_os_like_priority:
+  - alpine
+  - ubuntu
+  - debian
+  - centos
+  - redhat

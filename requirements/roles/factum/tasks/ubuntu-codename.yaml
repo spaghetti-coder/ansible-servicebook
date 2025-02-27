@@ -1,0 +1,17 @@
+---
+- name: Get Ubuntu codename data
+  ansible.builtin.shell:
+    cmd: |
+      . /etc/os-release
+      printf -- '%s\n' "${UBUNTU_CODENAME}"
+  register: factum_ubuntu_codename_candidate
+  changed_when: false
+
+- name: Set Ubuntu codename
+  ansible.builtin.set_fact:
+    factum_ubuntu_codename: "{{ factum_ubuntu_codename_candidate.stdout_lines | first | lower }}"
+
+- name: Unsupported Ubuntu codename
+  ansible.builtin.fail:
+    msg: "Unsupported distro: {{ ansible_os_family }}"
+  when: not factum_ubuntu_codename

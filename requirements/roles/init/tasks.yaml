@@ -1,0 +1,12 @@
+---
+- name: Update cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 86400 # <- If older then 24H
+  changed_when: false
+  become: true
+  when: factum_os_family in ['debian']
+
+- name: Mark done
+  ansible.builtin.set_fact:
+    _factum_done: true

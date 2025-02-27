@@ -1,0 +1,21 @@
+---
+- name: Docker repo
+  become: true
+  vars:
+    gpg_keyfile: "{{ ppa_deps_keyrings_dir }}/docker.gpg"
+    arch: "{{ docker_apt_arch }}"
+    codename: "{{ factum_ubuntu_codename | default(ansible_distribution_release) }}"
+    repo_url: https://download.docker.com/linux/{{ factum_os_like }}
+  block:
+    - name: Install GPG key
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/{{ factum_os_like }}/gpg
+        keyring: "{{ gpg_keyfile }}"
+        state: present
+
+    - name: Install repo
+      ansible.builtin.apt_repository:
+        repo: deb [signed-by={{ gpg_keyfile }} arch={{ arch }}] {{ repo_url }} {{ codename }} stable
+        state: present
+        filename: docker-ce
+        update_cache: true

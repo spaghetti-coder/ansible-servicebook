@@ -1,0 +1,7 @@
+---
+- name: Load tasks
+  ansible.builtin.include_tasks:
+    file: tasks.yaml
+  when:
+    - not (_editors_done | default(false))
+    - editors_packages | length > 0

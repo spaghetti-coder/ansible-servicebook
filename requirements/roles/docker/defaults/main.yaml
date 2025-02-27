@@ -1,0 +1,5 @@
+---
+# docker_users:   # <- Users to be added to docker group
+#   - "{{ ansible_user | default(ansible_user_id) }}"
+docker_managed: false
+docker_users: []

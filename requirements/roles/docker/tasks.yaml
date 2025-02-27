@@ -1,0 +1,45 @@
+---
+- name: Load OS specific vars
+  ansible.builtin.include_vars:
+    file: "{{ factum_os_like }}.yaml"
+  when: factum_os_like in ['alpine']
+
+- name: OS specific repo
+  ansible.builtin.include_tasks:
+    file: repo.{{ factum_os_family }}-family.yaml
+  when: factum_os_family in ['debian', 'redhat']
+
+- name: Privileged
+  become: true
+  block:
+    - name: Install
+      ansible.builtin.package:
+        name: "{{ docker_packages }}"
+
+    # https://wiki.alpinelinux.org/wiki/Docker#Docker_rootless
+    - name: Enable cgroups
+      ansible.builtin.service:
+        name: cgroups
+        state: started
+        enabled: true
+      when: factum_os_like in ['alpine']
+
+    - name: Enable service
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add user account to Docker group
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: docker
+        append: true
+      loop: "{{ docker_users }}"
+
+- name: Reset connection to apply groups
+  ansible.builtin.meta: reset_connection
+
+- name: Mark done
+  ansible.builtin.set_fact:
+    _docker_done: true

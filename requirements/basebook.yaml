@@ -1,5 +1,5 @@
 ---
-- name: ServiceBook
+- name: BaseBook
   hosts: all
   roles:
     - { role: init, tags: [always] }  # <- Required initial tasks

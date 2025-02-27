@@ -1,0 +1,5 @@
+---
+cli_downloaders_packages: "{{ cli_downloaders_candidates | difference(cli_downloaders_exclude) }}"
+cli_downloaders_candidates:
+  - curl
+  - wget

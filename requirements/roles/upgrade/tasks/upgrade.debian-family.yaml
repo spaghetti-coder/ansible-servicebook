@@ -1,0 +1,10 @@
+---
+# https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
+
+- name: Upgrade (Debian family)
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: true
+    force_apt_get: true
+    cache_valid_time: 3600
+  become: true

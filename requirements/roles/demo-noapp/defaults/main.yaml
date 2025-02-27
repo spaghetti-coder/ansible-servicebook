@@ -1,0 +1,9 @@
+---
+# {{ NOAPP }}
+
+# All settings after '# {{ NOAPP }}' tag will not be reflected inn sample
+# vars file. Useful for dependency-only, import/include-only and prerequisite
+# roles and also to skip some settings to get to sample vars file.
+
+# demo_noapp_managed: false # <- No need in this
+demo_noapp_conf_key: conf-value

@@ -1,0 +1,6 @@
+---
+- name: Upgrade (Alpine)
+  community.general.apk:
+    available: true
+    upgrade: true
+  become: true

@@ -18,3 +18,31 @@ ansible_become_password: changeme
 # All before this ROLES_CONF_TS4LE64m91 marker stays
 # unchanged by build-sample-vars.sh script
 #################### {{ ROLES_CONF_TS4LE64m91 }} ####################
+
+###
+### CLI-DOWNLOADERS
+###
+# Installs: curl, wget
+# -----
+# cli_downloaders_exclude:   # <- Won't install list
+#   - curl
+cli_downloaders_managed: false
+cli_downloaders_exclude: []
+
+###
+### DOCKER
+###
+# docker_users:   # <- Users to be added to docker group
+#   - "{{ ansible_user | default(ansible_user_id) }}"
+docker_managed: false
+docker_users: []
+
+###
+### EDITORS
+###
+# Installs: nano, neovim, vim
+# -----
+# editors_exclude:   # <- Won't install list
+#   - vim
+editors_managed: false
+editors_exclude: []

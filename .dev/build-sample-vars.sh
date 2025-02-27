@@ -5,6 +5,35 @@ build_sample_vars() (
   local DEST_FILE=sample/group_vars/all.yaml
   declare -a ROLES_PATHS=(. ./requirements)
 
+  declare -A ARGS=(
+    [is_help]=false
+  )
+
+  parse_args() {
+    while [ ${#} -gt 0 ]; do
+      case "${1}" in
+        -\?|-h|--help     ) ARGS[is_help]=true ;;
+      esac
+
+      shift
+    done
+  }
+
+  trap_help() {
+    ${ARGS[is_help]} || return
+
+    local self; self=build-sample-vars.sh
+    grep -q '.\+' -- "${0}" && self="$(basename -- "${0}")"
+
+    _text_fmt "
+      Build sample vars file based on defaults in available roles.
+
+      Usage:
+      =====
+      ${self}
+    "
+  }
+
   _get_default_files() {
     local append result
     local dir; for dir in "${@}"; do
@@ -58,7 +87,18 @@ build_sample_vars() (
     )
   }
 
+  _text_fmt() {
+    local content; content="$(
+      sed '/[^ ]/,$!d' <<< "${1-"$(cat)"}" | tac | sed '/[^ ]/,$!d' | tac
+    )"
+    local offset; offset="$(grep -o -m1 '^\s*' <<< "${content}")"
+    sed -e 's/^\s\{0,'${#offset}'\}//' -e 's/\s\+$//' <<< "${content}"
+  }
+
   main() {
+    parse_args "${@}" || return
+    trap_help && return
+
     cd -- "${PROJ_DIR}" || return
 
     declare -a default_files tmp_list

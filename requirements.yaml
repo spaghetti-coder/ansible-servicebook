@@ -1,3 +1,15 @@
 ---
-collections: []
+collections:
+  - name: ansible.posix
+    # https://galaxy.ansible.com/ui/repo/published/ansible/posix/
+    version: 2.0.0
+
+  - name: community.docker
+    # https://galaxy.ansible.com/ui/repo/published/community/docker/
+    version: 4.4.0
+
+  - name: community.general
+    # https://galaxy.ansible.com/ui/repo/published/community/general/
+    version: 10.3.1
+
 roles: []

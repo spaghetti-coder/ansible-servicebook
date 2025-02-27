@@ -1,0 +1,25 @@
+---
+- name: Get OS release ID like data
+  ansible.builtin.shell:
+    cmd: |
+      . /etc/os-release
+      printf -- '%s\n' "${ID}"
+      printf -- '%s\n' "${ID_LIKE}" | tr ' ' '\n' | sed '/^\s*$/d'
+  register: factum_os_like_candidates
+  changed_when: false
+  tags:
+    - skip_ansible_lint
+
+- name: Set OS like
+  ansible.builtin.set_fact:
+    # community.general.lists_intersect preserves factum_os_like_priority order
+    factum_os_like: "{{
+      factum_os_like_priority \
+        | community.general.lists_intersect(factum_os_like_candidates.stdout_lines) \
+        | first | lower
+      }}"
+
+- name: Unsupported OS like
+  ansible.builtin.fail:
+    msg: "Unsupported distro: {{ ansible_os_family }}"
+  when: not factum_os_like

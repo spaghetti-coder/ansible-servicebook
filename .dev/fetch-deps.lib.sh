@@ -19,9 +19,9 @@ fetch_deps() {
   parse_args() {
     while [ ${#} -gt 0 ]; do
       case "${1}" in
-        -\?|-h|--help ) ARGS[is_help]=true ;;
-        --base-branch ) ARGS[base_branch]="${2}"; shift ;;
-        *             ) ARGS[deps_file]="${1}" ;;
+        -\?|-h|--help     ) ARGS[is_help]=true ;;
+        -b|--base-branch  ) ARGS[base_branch]="${2}"; shift ;;
+        *                 ) ARGS[deps_file]="${1}" ;;
       esac
 
       shift
@@ -40,12 +40,12 @@ fetch_deps() {
 
       Usage:
       =====
-      ${self} [--base-branch BRANCH=${DEFAULTS[base_branch]}] [DEPS_FILE=${DEFAULTS[deps_file]}]
+      ${self} [-b|--base-branch BRANCH=${DEFAULTS[base_branch]}] [DEPS_FILE=${DEFAULTS[deps_file]}]
 
       Demo:
       ====
-      ${self} ./deps2.ini         # <- 'deps2.ini' file, '${DEFAULTS[base_branch]}' basebook git branch
-      ${self} --base-branch dev   # <- Use basebook 'dev' git branch
+      ${self} ./deps2.ini   # <- 'deps2.ini' file, '${DEFAULTS[base_branch]}' basebook git branch
+      ${self} -b dev        # <- Use basebook 'dev' git branch
     "
   }
 
@@ -70,7 +70,7 @@ fetch_deps() {
       grep -v '^\s*\([#;].*\)\?\s*$' -- "${ARGS[deps_file]}" 2>/dev/null
     )" && return
 
-    (set -x; rm -rf "${reqs_dir:?}"/{roles,*.yaml}; mkdir -p -- "${reqs_dir}") || return
+    (set -x; rm -rf "${reqs_dir:?}"/{roles,*.*}; mkdir -p -- "${reqs_dir}") || return
 
     local line book_name dl_url temp_dir
     while IFS= read -r line; do

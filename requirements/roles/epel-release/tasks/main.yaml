@@ -1,0 +1,7 @@
+---
+- name: Load tasks
+  ansible.builtin.include_tasks:
+    file: tasks.yaml
+  when:
+    - not (_epel_release_done | default(false))
+    - factum_os_like in ['redhat', 'centos']

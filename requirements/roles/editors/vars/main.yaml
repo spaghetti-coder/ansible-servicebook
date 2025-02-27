@@ -1,0 +1,6 @@
+---
+editors_packages: "{{ editors_candidates | difference(editors_exclude) }}"
+editors_candidates:
+  - nano
+  - neovim
+  - vim

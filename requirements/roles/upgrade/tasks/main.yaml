@@ -1,0 +1,4 @@
+---
+- name: OS specific upgrade
+  ansible.builtin.include_tasks:
+    file: "upgrade.{{ factum_os_family }}-family.yaml"

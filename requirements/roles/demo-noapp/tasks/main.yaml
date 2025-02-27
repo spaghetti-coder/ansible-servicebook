@@ -1,0 +1,6 @@
+---
+# For roles that are required only once use this trick
+- name: Load tasks
+  ansible.builtin.include_tasks:
+    file: tasks.yaml
+  when: not (_demo_noapp_done | default(false))

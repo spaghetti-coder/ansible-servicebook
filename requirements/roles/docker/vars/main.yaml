@@ -1,0 +1,9 @@
+---
+docker_apt_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'armhf' if ansible_architecture == 'armv7l' else 'amd64' }}"
+docker_rhel_distro_url_segment: "{{ (factum_os_like == 'centos') | ternary('centos', 'rhel') }}"
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin

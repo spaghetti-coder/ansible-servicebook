@@ -1,0 +1,18 @@
+---
+- name: Prereqs for {{ dependent | join(', ') }}
+  ansible.builtin.include_role:
+    name: epel-release
+  when: dependent | intersect(editors_packages) | length > 0
+  tags:
+    - skip_ansible_lint
+  vars:
+    dependent: [neovim]
+
+- name: Install {{ editors_packages | join(', ') }}
+  ansible.builtin.package:
+    name: "{{ editors_packages }}"
+  become: true
+
+- name: Mark done
+  ansible.builtin.set_fact:
+    _editors_done: true

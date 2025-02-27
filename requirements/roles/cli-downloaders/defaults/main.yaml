@@ -1,0 +1,7 @@
+---
+# Installs: curl, wget
+# -----
+# cli_downloaders_exclude:   # <- Won't install list
+#   - curl
+cli_downloaders_managed: false
+cli_downloaders_exclude: []
