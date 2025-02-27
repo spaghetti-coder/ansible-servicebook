@@ -1,0 +1,20 @@
+---
+# *_managed vars denote whether ansible takes care of the application or not.
+#   `X_managed: false` application will still fire if it is in `Y_managed: true`
+#   application dependencies
+#
+# *_enabled vars denote whether the application is enabled or not. Unlike
+#   X_managed it disables the application when `X_enabled: false`
+
+###
+### Server connection configuration
+###
+# Don't keep passwords in plain text, encrypt then. One option would be:
+#   ansible-vault encrypt_string -J PASSWORD_PLACEHOLDER
+ansible_user: ansible-guy   # <- Not required for ssh-key-based connection
+ansible_password: changeme  # <- Not required for ssh-key-based connection
+ansible_become_password: changeme
+
+# All before this ROLES_CONF_TS4LE64m91 marker stays
+# unchanged by build-sample-vars.sh script
+#################### {{ ROLES_CONF_TS4LE64m91 }} ####################

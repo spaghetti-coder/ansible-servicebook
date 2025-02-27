@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+pre_commit() {
+  local script_dir; script_dir="$(dirname -- "$(realpath --relative-to="$(pwd)" -- "${0}")")"
+  local dev_dir; dev_dir="$(dirname -- "${script_dir}")"
+
+  (set -x; "${dev_dir}/build-sample-vars.sh")
+}
+
+(return 2>/dev/null) || pre_commit

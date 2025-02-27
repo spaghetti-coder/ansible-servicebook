@@ -1,0 +1,24 @@
+---
+# https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html
+# https://docs.ansible.com/ansible/latest/getting_started/get_started_inventory.html
+
+all:
+  vars:
+    ansbile_become_method: ansible.builtin.sudo
+    ansible_python_interpreter: /usr/bin/python3
+  hosts:
+    file-server.home:
+      ansible_host: 10.0.0.5  # <- Not required if hostname is ssh-resolvable
+    backup-server.home:
+    desktop1.home:
+    laptop1.home:
+  children:
+    desktops:
+      hosts:
+        desktop1.home:
+        laptop1.home:
+    servers:
+      hosts:
+        file-server.home:
+        backup-server.home:
+        infra-server.home: # <- Additional server
