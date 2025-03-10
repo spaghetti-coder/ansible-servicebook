@@ -44,7 +44,7 @@ nginx_proxy_manager_extra_envfile:
 # Versions:
 # * https://hub.docker.com/r/jwilder/nginx-proxy/tags?name=alpine
 # Exposes:
-# * nxinx_proxy_net - proxy network name
+# * nginx_proxy_net - proxy network name
 # -----
 nginx_proxy_managed: false
 nginx_proxy_enabled: false
