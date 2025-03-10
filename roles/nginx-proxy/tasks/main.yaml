@@ -2,4 +2,4 @@
 - name: Load tasks
   ansible.builtin.include_tasks:
     file: tasks.yaml
-  when: not (_nginx_proxy_done | default(false))
+  when: not (nginx_proxy_done | default(false))

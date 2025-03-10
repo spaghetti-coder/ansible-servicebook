@@ -25,4 +25,4 @@
 
 - name: Mark done
   ansible.builtin.set_fact:
-    _nginx_proxy_done: true
+    nginx_proxy_done: true
