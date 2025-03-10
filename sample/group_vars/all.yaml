@@ -31,8 +31,8 @@ nginx_proxy_manager_managed: false
 nginx_proxy_manager_enabled: false
 nginx_proxy_manager_version: latest
 nginx_proxy_manager_owner: "{{ ansible_user | default(ansible_user_id) }}"
-# nginx_proxy_manager_compose_dir: ~/docker/nginx-proxy-manager # <- Better leave automanaged, or uncomment and edit
 nginx_proxy_manager_conf_dir: ~/conf/nginx-proxy-manager
+# nginx_proxy_manager_compose_dir: ~/docker/nginx-proxy-manager # <- Better leave automanaged, or uncomment and edit
 nginx_proxy_manager_service_name: nginx-proxy-manager
 nginx_proxy_manager_hostname: "{{ nginx_proxy_manager_service_name }}"
 nginx_proxy_manager_vhost: "{{ nginx_proxy_manager_service_name }}.domain.local"

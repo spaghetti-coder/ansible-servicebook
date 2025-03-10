@@ -1,12 +1,12 @@
 ---
-- name: ServiceBook
+- name: InitBook
   hosts: all
   roles:
     - { role: init, tags: [always] }  # <- Required initial tasks
 
-    #
-    # Base roles
-    #
+- name: BaseBook
+  hosts: all
+  roles:
     - role: bash
       tags: [bash]
       when: bash_managed | default(false)
@@ -34,9 +34,9 @@
     - role: upgrade
       tags: [upgrade, upgradable, never]
 
-    #
-    # Service roles
-    #
+- name: ServiceBook
+  hosts: all
+  roles:
     - role: nginx-proxy
       tags: [nginx-proxy, upgradable]
       when: nginx_proxy_managed | default(false)
