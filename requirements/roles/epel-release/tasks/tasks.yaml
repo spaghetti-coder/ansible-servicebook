@@ -17,4 +17,4 @@
 
 - name: Mark done
   ansible.builtin.set_fact:
-    _epel_release_done: true
+    epel_release_done: true

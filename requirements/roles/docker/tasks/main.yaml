@@ -2,4 +2,8 @@
 - name: Load tasks
   ansible.builtin.include_tasks:
     file: tasks.yaml
-  when: not (_docker_done | default(false))
+  vars:
+    docker_users_todo: "{{ docker_users | difference(docker_users_done | default([])) }}"
+  when: |
+    not (docker_install_done | default(false))
+    or (docker_users_todo | length) > 0

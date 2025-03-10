@@ -1,0 +1,11 @@
+---
+- name: Install
+  ansible.builtin.copy:
+    src: ps1-git.sh
+    dest: "{{ ps1_git_path }}"
+    mode: '0644'
+  become: true
+
+- name: Mark install done
+  ansible.builtin.set_fact:
+    ps1_git_install_done: true

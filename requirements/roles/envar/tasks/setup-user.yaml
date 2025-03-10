@@ -1,0 +1,14 @@
+---
+- name: Setup user
+  ansible.builtin.command:
+    cmd: "{{ envar_path }} setup"
+  register: envar_setup_result
+  changed_when:
+    - envar_setup_result.rc == 0
+    - envar_setup_result.stdout | lower == 'done'
+  become: true
+  become_user: "{{ user }}"
+
+- name: Mark user done
+  ansible.builtin.set_fact:
+    envar_users_done: "{{ (envar_users_done | default([])) + [user] }}"

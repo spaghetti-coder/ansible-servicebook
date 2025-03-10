@@ -1,0 +1,24 @@
+---
+- name: Envar
+  ansible.builtin.include_role:
+    name: envar
+  vars:
+    envar_users: "{{ ps1_git_users_todo }}"
+
+- name: PS1 git
+  vars:
+    ps1_git_path: "{{ envar_etc_dir }}/ps1-git.skip.sh"
+    ps1_git_user_link: "{{ envar_user_dir }}/500-ps1-git.sh"
+  block:
+    - name: Load install
+      ansible.builtin.include_tasks:
+        file: install.yaml
+      when: not (ps1_git_install_done | default(false))
+
+    - name: Load setup users
+      ansible.builtin.include_tasks:
+        file: setup-user.yaml
+      when: (ps1_git_users_todo | length) > 0
+      loop: "{{ ps1_git_users_todo }}"
+      loop_control:
+        loop_var: user

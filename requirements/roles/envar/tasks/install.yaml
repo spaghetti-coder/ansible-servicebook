@@ -1,0 +1,27 @@
+---
+- name: Privileged
+  become: true
+  block:
+    - name: Create installation directory
+      ansible.builtin.file:
+        state: directory
+        path: "{{ envar_path | dirname }}"
+        mode: '0755'
+
+    - name: Install
+      ansible.builtin.copy:
+        src: envar.sh
+        dest: "{{ envar_path }}"
+        mode: '0755'
+
+    - name: Initial configuration
+      ansible.builtin.command:
+        cmd: "{{ envar_path }} install"
+      register: envar_conf_result
+      changed_when:
+        - envar_conf_result.rc == 0
+        - envar_conf_result.stdout | lower == 'done'
+
+- name: Mark install done
+  ansible.builtin.set_fact:
+    envar_install_done: true

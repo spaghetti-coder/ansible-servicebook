@@ -1,0 +1,9 @@
+---
+- name: Load tasks
+  ansible.builtin.include_tasks:
+    file: tasks.yaml
+  vars:
+    ps1_git_users_todo: "{{ ps1_git_users | difference(ps1_git_users_done | default([])) }}"
+  when: |
+    not (ps1_git_install_done | default(false))
+    or (ps1_git_users_todo | length) > 0

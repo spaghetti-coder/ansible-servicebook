@@ -9,4 +9,4 @@
 
 - name: Mark done
   ansible.builtin.set_fact:
-    _factum_done: true
+    factum_done: true

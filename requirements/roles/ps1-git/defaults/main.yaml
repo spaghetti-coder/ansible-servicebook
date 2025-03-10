@@ -1,0 +1,9 @@
+---
+# Installs fancy PS1 wigh git PS1 suffix support. Loaded with envar.
+# Doesn't require git
+# -----
+# ps1_git_users:  # <- Users that will have this PS1
+#   - "{{ ansible_user | default(ansible_user_id) }}"
+#   - root
+ps1_git_managed: false
+ps1_git_users: []

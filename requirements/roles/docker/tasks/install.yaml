@@ -30,16 +30,6 @@
         state: started
         enabled: true
 
-    - name: Add user account to Docker group
-      ansible.builtin.user:
-        name: "{{ item }}"
-        groups: docker
-        append: true
-      loop: "{{ docker_users }}"
-
-- name: Reset connection to apply groups
-  ansible.builtin.meta: reset_connection
-
-- name: Mark done
+- name: Mark install done
   ansible.builtin.set_fact:
-    _docker_done: true
+    docker_install_done: true

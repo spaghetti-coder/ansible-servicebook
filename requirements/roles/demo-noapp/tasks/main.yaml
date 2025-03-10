@@ -4,3 +4,7 @@
   ansible.builtin.include_tasks:
     file: tasks.yaml
   when: not (_demo_noapp_done | default(false))
+
+- name: Mark done
+  ansible.builtin.set_fact:
+    _demo_noapp_done: true

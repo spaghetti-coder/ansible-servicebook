@@ -1,0 +1,6 @@
+---
+envar_path: /opt/varlog/envar/envar.sh
+
+# Not required by the role itself but it's consumers may need them
+envar_etc_dir: /etc/envar
+envar_user_dir: "~/.envar.d"

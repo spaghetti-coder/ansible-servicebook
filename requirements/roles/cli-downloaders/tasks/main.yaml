@@ -2,6 +2,8 @@
 - name: Load tasks
   ansible.builtin.include_tasks:
     file: tasks.yaml
-  when:
-    - not (_cli_downloaders_done | default(false))
-    - cli_downloaders_packages | length > 0
+  vars:
+    cli_downloaders_packages_todo: "{{
+        cli_downloaders_packages | difference(cli_downloaders_packages_done | default([]))
+      }}"
+  when: cli_downloaders_packages_todo | length > 0

@@ -1,0 +1,11 @@
+---
+- name: Install
+  ansible.builtin.package:
+    name: "{{ cli_downloaders_packages_todo }}"
+  become: true
+
+- name: Mark packages done
+  ansible.builtin.set_fact:
+    cli_downloaders_packages_done: "{{
+        cli_downloaders_packages_todo + (cli_downloaders_packages_done | default([]))
+      }}"

@@ -7,6 +7,10 @@
     #
     # Base roles
     #
+    - role: bash
+      tags: [bash]
+      when: bash_managed | default(false)
+
     - role: cli-downloaders
       tags: [cli-downloaders]
       when: cli_downloaders_managed | default(false)
@@ -18,6 +22,14 @@
     - role: editors
       tags: [editors]
       when: editors_managed | default(false)
+
+    - role: envar
+      tags: [envar]
+      when: envar_managed | default(false)
+
+    - role: ps1-git
+      tags: [ps1-git]
+      when: ps1_git_managed | default(false)
 
     - role: upgrade
       tags: [upgrade, upgradable, never]

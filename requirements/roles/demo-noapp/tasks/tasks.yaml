@@ -1,0 +1,4 @@
+---
+- name: Demo
+  ansible.builtin.debug:
+    msg: Demo no-app role

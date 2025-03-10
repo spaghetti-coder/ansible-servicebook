@@ -56,14 +56,20 @@ nginx_proxy_hostname: "{{ nginx_proxy_service_name }}"
 nginx_proxy_http_port: 80
 
 ###
+### BASH
+###
+bash_managed: false
+bash_completion: false
+
+###
 ### CLI-DOWNLOADERS
 ###
 # Installs: curl, wget
 # -----
-# cli_downloaders_exclude:   # <- Won't install list
+# cli_downloaders_pick:   # <- Only install packages, or [] to install all
 #   - curl
 cli_downloaders_managed: false
-cli_downloaders_exclude: []
+cli_downloaders_pick: []
 
 ###
 ### DOCKER
@@ -78,7 +84,30 @@ docker_users: []
 ###
 # Installs: nano, neovim, vim
 # -----
-# editors_exclude:   # <- Won't install list
+# editors_pick:   # <- Only install packages, or [] to install all
 #   - vim
 editors_managed: false
-editors_exclude: []
+editors_pick: []
+
+###
+### ENVAR
+###
+# Installs envar for bash
+# -----
+# envar_users:  # <- Users that will have access to envar
+#   - "{{ ansible_user | default(ansible_user_id) }}"
+#   - root
+envar_managed: false
+envar_users: []
+
+###
+### PS1-GIT
+###
+# Installs fancy PS1 wigh git PS1 suffix support. Loaded with envar.
+# Doesn't require git
+# -----
+# ps1_git_users:  # <- Users that will have this PS1
+#   - "{{ ansible_user | default(ansible_user_id) }}"
+#   - root
+ps1_git_managed: false
+ps1_git_users: []

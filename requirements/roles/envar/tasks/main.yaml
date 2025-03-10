@@ -1,0 +1,9 @@
+---
+- name: Load tasks
+  ansible.builtin.include_tasks:
+    file: tasks.yaml
+  vars:
+    envar_users_todo: "{{ envar_users | difference(envar_users_done | default([])) }}"
+  when: |
+    not (envar_install_done | default(false))
+    or (envar_users_todo | length) > 0

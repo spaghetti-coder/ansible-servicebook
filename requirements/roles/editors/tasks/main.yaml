@@ -2,6 +2,8 @@
 - name: Load tasks
   ansible.builtin.include_tasks:
     file: tasks.yaml
-  when:
-    - not (_editors_done | default(false))
-    - editors_packages | length > 0
+  vars:
+    editors_packages_todo: "{{
+        editors_packages | difference(editors_packages_done | default([]))
+      }}"
+  when: editors_packages_todo | length > 0

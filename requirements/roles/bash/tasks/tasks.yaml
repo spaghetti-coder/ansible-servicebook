@@ -1,0 +1,11 @@
+---
+- name: Install
+  ansible.builtin.package:
+    name: "{{ bash_packages_todo }}"
+  become: true
+
+- name: Mark packages done
+  ansible.builtin.set_fact:
+    bash_packages_done: "{{
+        bash_packages_todo + (bash_packages_done | default([]))
+      }}"

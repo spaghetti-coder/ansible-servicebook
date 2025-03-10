@@ -1,0 +1,13 @@
+---
+- name: Load install
+  ansible.builtin.include_tasks:
+    file: install.yaml
+  when: not (docker_install_done | default(false))
+
+- name: Load setup users
+  ansible.builtin.include_tasks:
+    file: setup-user.yaml
+  when: (docker_users_todo | length) > 0
+  loop: "{{ docker_users_todo }}"
+  loop_control:
+    loop_var: user

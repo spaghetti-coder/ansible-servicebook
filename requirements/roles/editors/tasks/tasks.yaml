@@ -1,0 +1,16 @@
+---
+- name: Install prereqs
+  ansible.builtin.include_role:
+    name: epel-release
+  when: editors_packages_todo | intersect(['neovim']) | length > 0
+
+- name: Install
+  ansible.builtin.package:
+    name: "{{ editors_packages_todo }}"
+  become: true
+
+- name: Mark packages done
+  ansible.builtin.set_fact:
+    editors_packages_done: "{{
+        editors_packages_todo + (editors_packages_done | default([]))
+      }}"

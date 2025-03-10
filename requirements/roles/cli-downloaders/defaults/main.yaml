@@ -1,7 +1,7 @@
 ---
 # Installs: curl, wget
 # -----
-# cli_downloaders_exclude:   # <- Won't install list
+# cli_downloaders_pick:   # <- Only install packages, or [] to install all
 #   - curl
 cli_downloaders_managed: false
-cli_downloaders_exclude: []
+cli_downloaders_pick: []

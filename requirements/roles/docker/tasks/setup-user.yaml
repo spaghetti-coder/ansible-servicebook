@@ -1,0 +1,14 @@
+---
+- name: Setup user group
+  ansible.builtin.user:
+    name: "{{ user }}"
+    groups: docker
+    append: true
+  become: true
+
+- name: Reset connection to apply groups
+  ansible.builtin.meta: reset_connection
+
+- name: Mark user done
+  ansible.builtin.set_fact:
+    docker_users_done: "{{ (docker_users_done | default([])) + [user] }}"

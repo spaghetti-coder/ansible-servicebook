@@ -2,4 +2,4 @@
 - name: Load tasks
   ansible.builtin.include_tasks:
     file: tasks.yaml
-  when: not (_factum_done | default(false))
+  when: not (factum_done | default(false))

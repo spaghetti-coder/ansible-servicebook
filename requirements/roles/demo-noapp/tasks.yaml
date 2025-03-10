@@ -1,8 +1,0 @@
----
-- name: Demo
-  ansible.builtin.debug:
-    msg: Demo no-app role
-
-- name: Mark done
-  ansible.builtin.set_fact:
-    _demo_noapp_done: true

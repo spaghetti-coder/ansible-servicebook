@@ -1,0 +1,13 @@
+---
+- name: Setup user
+  ansible.builtin.file:
+    src: "{{ ps1_git_path }}"
+    dest: "{{ ps1_git_user_link }}"
+    state: link
+    force: true
+  become: true
+  become_user: "{{ user }}"
+
+- name: Mark setup done
+  ansible.builtin.set_fact:
+    ps1_git_users_done: "{{ (ps1_git_users_done | default([])) + [user] }}"

@@ -3,5 +3,5 @@
   ansible.builtin.include_tasks:
     file: tasks.yaml
   when:
-    - not (_ppa_deps_done | default(false))
     - factum_os_like in ['debian', 'ubuntu']
+    - not (ppa_deps_done | default(false))
