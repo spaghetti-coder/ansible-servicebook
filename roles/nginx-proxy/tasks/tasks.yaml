@@ -1,4 +1,11 @@
 ---
+- name: Docker
+  ansible.builtin.include_role:
+    name: docker
+  vars:
+    docker_users:
+      - "{{ nginx_proxy_owner }}"
+
 - name: Compose
   become: true
   become_user: "{{ nginx_proxy_owner }}"
