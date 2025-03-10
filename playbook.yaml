@@ -37,7 +37,7 @@
 - name: ServiceBook
   hosts: all
   roles:
-    - role: nginx-proxy
+    - role: nginx-proxy   # <- Must be berofe dependent services (with *_vhost variable)
       tags: [nginx-proxy, upgradable]
       when: nginx_proxy_managed | default(false)
 
